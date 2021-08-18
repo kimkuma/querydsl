@@ -14,12 +14,14 @@ import lombok.Setter;
 import lombok.ToString;
 
 @Entity
-@Getter @Setter
+@Getter
+@Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@ToString(of = {"id","username","age"})
+@ToString(of = {"id", "username", "age"})
 public class Member {
 
-    @Id @GeneratedValue
+    @Id
+    @GeneratedValue
     @Column(name = "member_id")
     private Long id;
 
@@ -28,21 +30,21 @@ public class Member {
     private int age;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name= "team_id")
+    @JoinColumn(name = "team_id")
     private Team team;
 
     public Member(String username) {
-        this(username,0);
+        this(username, 0);
     }
 
     public Member(String username, int age) {
-        this(username,age,null);
+        this(username, age, null);
     }
 
     public Member(String username, int age, Team team) {
         this.username = username;
         this.age = age;
-        if(team != null) {
+        if (team != null) {
             changeTeam(team);
         }
     }
@@ -51,5 +53,4 @@ public class Member {
         this.team = team;
         team.getMembers().add(this);
     }
-
 }
